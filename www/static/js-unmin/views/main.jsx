@@ -77,6 +77,6 @@ var Response = React.createClass({
 });
 
 module.exports = React.render(
-  <QuestionList url="/hc/hcat.json" />,
+  <QuestionList url="/hc/static/hcat.json" />,
   document.getElementById('content')
 );
