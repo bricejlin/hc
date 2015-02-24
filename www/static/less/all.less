@@ -1,0 +1,69 @@
+@import (inline) 'node_modules/normalize.css/normalize.css';
+@import '_global';
+
+::-webkit-input-placeholder {
+  color: black;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: black;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: black;  
+}
+
+:-ms-input-placeholder {  
+  color: black;  
+}
+
+.container {
+  padding: 1em;
+}
+
+#title {
+  border: 3px solid black;
+  letter-spacing: -0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#search input {
+  border-bottom: 3px solid black;
+  font-size: 3em;
+  font-weight: 600;
+  width: 100%;
+}
+
+#questions {
+  margin-top: 1em;
+}
+
+.question {
+  margin-top: 1em;
+  h1 {
+    cursor: pointer;
+    font-size: 1.5em;
+    line-height: 1.1em;
+    margin: 0.3em auto;
+  }
+}
+
+.response {
+  font-weight: 400;
+  display: block;
+  font-size: 1.1em;
+  line-height: 1.6em;
+}
+
+.response.closed {
+  display: none;
+}
+
+/* reftagger tooltip override */
+@media (max-width: 360px) {
+  div.rtTooltip.rtLight {
+    width: 100%;
+    left: 0 !important;
+  }
+}
