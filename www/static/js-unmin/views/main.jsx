@@ -1,6 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
-var RefTagger = require('react-reftagger');
+var RefTagger = require('./reftagger.jsx');
 
 var QuestionList = React.createClass({
   loadQuestionsFromServer: function () {
