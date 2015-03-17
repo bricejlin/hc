@@ -60,7 +60,6 @@ gulp.task('less-build', function () {
   return lessTask(true);
 });
 
-
 gulp.task('watch', ['less', 'browserify', 'browserify-sw'], function () {
   gulp.watch('www/static/less/*.less', ['less']);
   gulp.watch('www/static/js-unmin/**/*.js', ['browserify']);

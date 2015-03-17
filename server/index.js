@@ -14,6 +14,10 @@ app.get('/hc', function (req, res) {
   res.render('../www/index.html');
 });
 
+app.get('/hc/manifest.json', function (req, res) {
+  res.sendFile(path.resolve(__dirname + '/../manifest.json'));
+});
+
 app.get('/hc/sw.js', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/../www/static/js/sw.js'));
 });
