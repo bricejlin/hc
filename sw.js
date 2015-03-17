@@ -26,7 +26,7 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-  var cacheWhitelist = ['static-v1'];
+  var cacheWhitelist = [CACHE_NAME];
 
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
@@ -41,42 +41,42 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (res) {
-      if (res) {
-        return res;
-      } else {
-        console.log(event.request.url);
-        fetch(event.request);
-      }
-    })
-  );
-});
-
 // self.addEventListener('fetch', function (event) {
 //   event.respondWith(
 //     caches.match(event.request).then(function (res) {
-//       // cache hit - return response
-//       if (res) { return res; }
-
-//       var fetchReq = event.request.clone();
-
-//       return fetch(fetchReq).then(function (res) {
-//         if (!res || res.status !== 200 || res.type !== 'basic') { return res; }
-
-//         var resToCache = res.clone();
-
-//         caches.open(CACHE_NAME).then(function (cache) {
-//           var cacheReq = event.request.clone();
-//           cache.put(cacheReq, resToCache);
-//         });
-
+//       if (res) {
 //         return res;
-//       });
+//       } else {
+//         console.log(event.request.url);
+//         fetch(event.request);
+//       }
 //     })
 //   );
 // });
+
+self.addEventListener('fetch', function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (res) {
+      // cache hit - return response
+      if (res) { return res; }
+
+      var fetchReq = event.request.clone();
+
+      return fetch(fetchReq).then(function (res) {
+        if (!res || res.status !== 200 || res.type !== 'basic') { return res; }
+
+        var resToCache = res.clone();
+
+        caches.open(CACHE_NAME).then(function (cache) {
+          var cacheReq = event.request.clone();
+          cache.put(cacheReq, resToCache);
+        });
+
+        return res;
+      });
+    })
+  );
+});
 
 },{"../libs/caches":2}],2:[function(require,module,exports){
 if (!Cache.prototype.add) {
