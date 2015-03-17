@@ -90,8 +90,9 @@ gulp.task('build', ['clean', 'less-build', 'browserify-build'], function () {
     'static/js/main.js',
     'sw.js',
     'static/imgs/favicon.ico',
+    'static/imgs/hc.png',
     'static/hcat.json'
   ]).pipe(writeStream);
 });
 
-gulp.task('default', ['watch', 'server']);
+gulp.task('default', ['watch', 'serve']);
