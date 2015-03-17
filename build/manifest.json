@@ -1,1 +1,11 @@
-Cannot GET /hc/manifest.json
+{
+  "short_name": "Heidelberg Catechism App",
+  "name": "Heidelberg Catechism App",
+  "icon": [
+    {
+      "src": "imgs/hc.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}
