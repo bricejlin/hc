@@ -92,7 +92,9 @@ gulp.task('build', ['clean', 'less-build', 'browserify-sw', 'browserify-build'],
     'static/imgs/favicon.ico',
     'static/imgs/hc.png',
     'static/hcat.json',
-    'manifest.json'
+    'manifest.json',
+    'static/fonts/source400.woff2',
+    'static/fonts/source600.woff2',
   ]).pipe(writeStream);
 });
 
