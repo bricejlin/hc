@@ -1,12 +1,20 @@
+var Promise = require('es6-promise').Promise;
 var $ = require('jquery');
 
 require('./views/main.jsx');
 
 $(document).ready(function () {
   setTimeout(function () {
-    $('.rtBibleRef').click(function (e) {
-      e.preventDefault();
-      $(this).trigger('hover');
+    var vTagged = new Promise(function (resolve, reject) {
+      refTagger.tag(document.body);
+      resolve();
+    });
+
+    vTagged.then(function () {
+      $('.rtBibleRef').click(function (e) {
+        e.preventDefault();
+        $(this).trigger('hover');
+      });
     });
   }, 1000);
 });
