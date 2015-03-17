@@ -77,7 +77,8 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('build', ['clean', 'less-build', 'browserify-build'], function () {
+gulp.task('build', ['clean', 'less-build', 'browserify-sw', 'browserify-build'], 
+  function () {
   var server = app.listen(3000);
   var writeStream = gulp.dest('build/');
 
