@@ -1,5 +1,5 @@
 var caches = require('../libs/caches');
-
+//v2
 var CACHE_NAME = 'static-v1';
 var urlsToCache = [
   '/',

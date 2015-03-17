@@ -81,3 +81,5 @@ if (!CacheStorage.prototype.match) {
     });
   };
 }
+
+module.exports = self.caches;
