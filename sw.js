@@ -48,7 +48,7 @@ self.addEventListener('activate', function (event) {
 //         return res;
 //       } else {
 //         console.log(event.request.url);
-//         fetch(event.request);
+//         return fetch(event.request);
 //       }
 //     })
 //   );
