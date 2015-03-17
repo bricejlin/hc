@@ -2,8 +2,8 @@ var caches = require('../libs/caches');
 //v2
 var CACHE_NAME = 'static-v1';
 var urlsToCache = [
-  '/',
-  'static/css/all.css',
+  '/hc/',
+  '/hc/static/css/all.css',
   // '/normalize.css'
   // new Request('http://dragon.ak.fbcdn.net/hphotos-ak-xpf1/t39.3284-6/10574688_1565081647062540_1607884640_n.js', {mode: 'no-cors'}),
   // new Request('https://fb.me/JSXTransformer-0.12.2.js', {mode: 'no-cors'}),
