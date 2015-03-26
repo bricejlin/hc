@@ -96,6 +96,8 @@ gulp.task('build', ['clean', 'less-build', 'browserify-sw', 'browserify-build'],
     'manifest.json',
     'static/fonts/source400.woff2',
     'static/fonts/source600.woff2',
+    'static/fonts/source400.otf',
+    'static/fonts/source600.otf',
   ]).pipe(writeStream);
 });
 
