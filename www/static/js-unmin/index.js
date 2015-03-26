@@ -1,4 +1,3 @@
-var Promise = require('es6-promise').Promise;
 var $ = require('jquery');
 
 require('./views/main.jsx');

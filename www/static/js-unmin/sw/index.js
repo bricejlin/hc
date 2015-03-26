@@ -1,6 +1,6 @@
 var caches = require('../libs/caches');
-//v2
-var CACHE_NAME = 'static-v1';
+
+var HC_CACHE = 'static-hc-v1';
 var urlsToCache = [
   '/hc/',
   '/hc/static/css/all.css',
@@ -10,14 +10,13 @@ var urlsToCache = [
   '/hc/static/hcat.json',
   '/hc/static/fonts/source400.woff2',
   '/hc/static/fonts/source600.woff2',
-  new Request('https://api.reftagger.com/v2/RefTagger.js', { mode: 'no-cors' }),
-  new Request('https://www.google-analytics.com/analytics.js', { mode: 'no-cors' })
+  new Request('https://api.reftagger.com/v2/RefTagger.js', { mode: 'no-cors' })
 ];
 
 self.addEventListener('install', function (event) {
   // pre cache a load of stuff
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
+    caches.open(HC_CACHE).then(function (cache) {
       console.log('Opened cache');
       return cache.addAll(urlsToCache);
     })
@@ -25,7 +24,7 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-  var cacheWhitelist = [CACHE_NAME];
+  var cacheWhitelist = [HC_CACHE];
 
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
@@ -40,18 +39,6 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-// self.addEventListener('fetch', function (event) {
-//   event.respondWith(
-//     caches.match(event.request).then(function (res) {
-//       if (res) {
-//         return res;
-//       } else {
-//         console.log(event.request.url);
-//         return fetch(event.request);
-//       }
-//     })
-//   );
-// });
 
 self.addEventListener('fetch', function (event) {
   event.respondWith(
@@ -61,12 +48,13 @@ self.addEventListener('fetch', function (event) {
 
       var fetchReq = event.request.clone();
 
+      // save req to cache
       return fetch(fetchReq).then(function (res) {
         if (!res || res.status !== 200 || res.type !== 'basic') { return res; }
 
         var resToCache = res.clone();
 
-        caches.open(CACHE_NAME).then(function (cache) {
+        caches.open(HC_CACHE).then(function (cache) {
           var cacheReq = event.request.clone();
           cache.put(cacheReq, resToCache);
         });

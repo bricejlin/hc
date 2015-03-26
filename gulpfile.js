@@ -64,6 +64,7 @@ gulp.task('watch', ['less', 'browserify', 'browserify-sw'], function () {
   gulp.watch('www/static/less/*.less', ['less']);
   gulp.watch('www/static/js-unmin/**/*.js', ['browserify']);
   gulp.watch('www/static/js-unmin/**/*.jsx', ['browserify']);
+  gulp.watch('www/static/js-unmin/sw/index.js', ['browserify-sw']);
 });
 
 gulp.task('serve', function () {

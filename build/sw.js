@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var caches = require('../libs/caches');
-//v2
-var CACHE_NAME = 'static-v1';
+
+var HC_CACHE = 'static-hc-v1';
 var urlsToCache = [
   '/hc/',
   '/hc/static/css/all.css',
@@ -18,7 +18,7 @@ var urlsToCache = [
 self.addEventListener('install', function (event) {
   // pre cache a load of stuff
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
+    caches.open(HC_CACHE).then(function (cache) {
       console.log('Opened cache');
       return cache.addAll(urlsToCache);
     })
@@ -26,7 +26,7 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-  var cacheWhitelist = [CACHE_NAME];
+  var cacheWhitelist = [HC_CACHE];
 
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
@@ -41,38 +41,14 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-// self.addEventListener('fetch', function (event) {
-//   event.respondWith(
-//     caches.match(event.request).then(function (res) {
-//       if (res) {
-//         return res;
-//       } else {
-//         console.log(event.request.url);
-//         return fetch(event.request);
-//       }
-//     })
-//   );
-// });
-
 self.addEventListener('fetch', function (event) {
   event.respondWith(
-    caches.match(event.request).then(function (res) {
-      // cache hit - return response
-      if (res) { return res; }
-
-      var fetchReq = event.request.clone();
-
-      return fetch(fetchReq).then(function (res) {
-        if (!res || res.status !== 200 || res.type !== 'basic') { return res; }
-
-        var resToCache = res.clone();
-
-        caches.open(CACHE_NAME).then(function (cache) {
-          var cacheReq = event.request.clone();
-          cache.put(cacheReq, resToCache);
+    caches.open(HC_CACHE).then(function (cache) {
+      return cache.match(event.request).then(function (res) {
+        return res || fetch(event.request.clone()).then(function (res) {
+          cache.put(event.request, res.clone());
+          return res;
         });
-
-        return res;
       });
     })
   );
