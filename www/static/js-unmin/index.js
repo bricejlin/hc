@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/hc/sw.js')
+  navigator.serviceWorker.register('/hc/sw.js', {scope: '/hc/'})
     .then(function (reg) {
       console.log(':D', reg);
     }).catch(function (err) {
