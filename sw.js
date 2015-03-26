@@ -11,8 +11,7 @@ var urlsToCache = [
   '/hc/static/hcat.json',
   '/hc/static/fonts/source400.woff2',
   '/hc/static/fonts/source600.woff2',
-  new Request('https://api.reftagger.com/v2/RefTagger.js', { mode: 'no-cors' }),
-  new Request('https://www.google-analytics.com/analytics.js', { mode: 'no-cors' })
+  new Request('https://api.reftagger.com/v2/RefTagger.js', { mode: 'no-cors' })
 ];
 
 self.addEventListener('install', function (event) {
@@ -41,14 +40,27 @@ self.addEventListener('activate', function (event) {
   );
 });
 
+
 self.addEventListener('fetch', function (event) {
   event.respondWith(
-    caches.open(HC_CACHE).then(function (cache) {
-      return cache.match(event.request).then(function (res) {
-        return res || fetch(event.request.clone()).then(function (res) {
-          cache.put(event.request, res.clone());
-          return res;
+    caches.match(event.request).then(function (res) {
+      // cache hit - return response
+      if (res) { return res; }
+
+      var fetchReq = event.request.clone();
+
+      // save req to cache
+      return fetch(fetchReq).then(function (res) {
+        if (!res || res.status !== 200 || res.type !== 'basic') { return res; }
+
+        var resToCache = res.clone();
+
+        caches.open(HC_CACHE).then(function (cache) {
+          var cacheReq = event.request.clone();
+          cache.put(cacheReq, resToCache);
         });
+
+        return res;
       });
     })
   );
